@@ -25,14 +25,15 @@ namespace TestNinja.Tests
         [Test]
         public void DownloadInstaller_DownloadFails_ReturnsFalse()
         {
-            _fileDownloader.Setup(fd => fd.DownloadFile("http://example.com/customerName/installerName", null)).Throws<WebException>();
+            _fileDownloader.Setup(fd => fd.DownloadFile(It.IsAny<string>(), It.IsAny<string>())).Throws<WebException>();
             var result = _installerHelper.DownloadInstaller("customerName", "installerName");
             Assert.That(result, Is.False);
         }
         [Test]
         public void DownloadInstaller_DownloadSuccesseful_ReturnsTrue()
         {
-            _fileDownloader.Setup(fd => fd.DownloadFile("URL", "Path")).Throws<WebException>();
+            var result = _installerHelper.DownloadInstaller("customerName", "installerName");
+            Assert.That(result, Is.True);
         }
     }
 }
