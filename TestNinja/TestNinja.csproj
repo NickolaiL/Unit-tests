@@ -72,6 +72,7 @@
     <Compile Include="Mocking\FileDownloader.cs" />
     <Compile Include="Mocking\VideoRepository.cs" />
     <Compile Include="Tests\DemeritPointsCalculatorTests.cs" />
+    <Compile Include="Tests\EmployeeControllerTests.cs" />
     <Compile Include="Tests\FizzBuzzTests.cs" />
     <Compile Include="Tests\InstallHelperTests.cs" />
     <Compile Include="Tests\OrderServiceTests.cs" />

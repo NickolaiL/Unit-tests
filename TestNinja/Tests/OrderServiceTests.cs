@@ -20,6 +20,7 @@ namespace TestNinja.Tests
 
             var order = new Order();
             var orderId = service.PlaceOrder(order);
+
             storage.Verify(s => s.Store(order));
         }
     }
