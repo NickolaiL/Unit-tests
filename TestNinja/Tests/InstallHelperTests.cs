@@ -14,18 +14,20 @@ namespace TestNinja.Tests
     public class InstallHelperTests
     {
         private Mock<IFileDownloader> _fileDownloader;
-        private Mock<InstallerHelper> _installerHelper;
+        private InstallerHelper _installerHelper;
 
         [SetUp]
         public void SetUp()
         {
             _fileDownloader = new Mock<IFileDownloader>();
-            _installerHelper = new Mock<InstallerHelper>(_fileDownloader.Object);
+            _installerHelper = new InstallerHelper(_fileDownloader.Object);
         }
         [Test]
         public void DownloadInstaller_DownloadFails_ReturnsFalse()
         {
-            _fileDownloader.Setup(fd => fd.DownloadFile("URL", "Path")).Throws<WebException>();
+            _fileDownloader.Setup(fd => fd.DownloadFile("http://example.com/customerName/installerName", null)).Throws<WebException>();
+            var result = _installerHelper.DownloadInstaller("customerName", "installerName");
+            Assert.That(result, Is.False);
         }
         [Test]
         public void DownloadInstaller_DownloadSuccesseful_ReturnsTrue()
