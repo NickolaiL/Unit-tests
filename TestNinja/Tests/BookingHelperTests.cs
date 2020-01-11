@@ -68,6 +68,58 @@ namespace TestNinja.Tests
             }, _bookingRepository.Object);
             Assert.That(result, Is.EqualTo(_existingBooking.Reference));
         }
+
+        [Test]
+        public void BookingStartsAndFinishesInTheMiddleOfAnExistingBooking_ReturnExistingBookingReference()
+        {
+            var result = BookingHelper.OverlappingBookingsExist(new Booking
+            {
+                Id = 1,
+                Status = "Active",
+                ArrivalDate = After(_existingBooking.ArrivalDate, days: 2),
+                DepartureDate = Before(_existingBooking.DepartureDate),
+            }, _bookingRepository.Object);
+            Assert.That(result, Is.EqualTo(_existingBooking.Reference));
+        }
+
+        [Test]
+        public void BookingStartsInTheMiddleOfAndFinishesAfterAnExistingBooking_ReturnExistingBookingReference()
+        {
+            var result = BookingHelper.OverlappingBookingsExist(new Booking
+            {
+                Id = 1,
+                Status = "Active",
+                ArrivalDate = After(_existingBooking.ArrivalDate, days: 2),
+                DepartureDate = After(_existingBooking.DepartureDate),
+            }, _bookingRepository.Object);
+            Assert.That(result, Is.EqualTo(_existingBooking.Reference));
+        }
+
+        [Test]
+        public void BookingStartsAndFinishesAfterAnExistingBooking_ReturnEmptyString()
+        {
+            var result = BookingHelper.OverlappingBookingsExist(new Booking
+            {
+                Id = 1,
+                Status = "Active",
+                ArrivalDate = After(_existingBooking.DepartureDate, days: 2),
+                DepartureDate = After(_existingBooking.DepartureDate, days: 4),
+            }, _bookingRepository.Object);
+            Assert.That(result, Is.Empty);
+        }
+
+        [Test]
+        public void BookingIsOverlappingButCanceled_ReturnEmptyString()
+        {
+            var result = BookingHelper.OverlappingBookingsExist(new Booking
+            {
+                Id = 1,
+                Status = "Cancelled",
+                ArrivalDate = Before(_existingBooking.DepartureDate, days: 2),
+                DepartureDate = After(_existingBooking.DepartureDate, days: 4),
+            }, _bookingRepository.Object);
+            Assert.That(result, Is.Empty);
+        }
         private DateTime Before (DateTime dateTime, int days = 1)
         {
             return dateTime.AddDays(-days);
