@@ -68,9 +68,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mocking\BookingRepository.cs" />
     <Compile Include="Mocking\EmployeeStorage.cs" />
     <Compile Include="Mocking\FileDownloader.cs" />
     <Compile Include="Mocking\VideoRepository.cs" />
+    <Compile Include="Tests\BookingHelperTests.cs" />
     <Compile Include="Tests\DemeritPointsCalculatorTests.cs" />
     <Compile Include="Tests\EmployeeControllerTests.cs" />
     <Compile Include="Tests\FizzBuzzTests.cs" />
